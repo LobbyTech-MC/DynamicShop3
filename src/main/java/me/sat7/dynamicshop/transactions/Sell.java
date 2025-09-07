@@ -55,7 +55,8 @@ public final class Sell
         double priceSum = -deliveryCharge;
 
         // 실제 판매 가능량 확인
-        int tradeAmount;
+        int tradeAmount = itemStack.getAmount();
+        //player.sendMessage("交易数量为：" + tradeAmount);
         if (nonJetMinionSell && player != null)
         {
             if (isShiftClick)
@@ -66,10 +67,6 @@ public final class Sell
             {
                 tradeAmount = player.getInventory().getItem(slot).getAmount();
             }
-        }
-        else
-        {
-            tradeAmount = itemStack.getAmount();
         }
 
         if (maxStock != -1 && stockOld + tradeAmount > maxStock)
@@ -115,7 +112,7 @@ public final class Sell
         // 플레이어 인벤토리에서 아이템 제거
         if (nonJetMinionSell && player != null)
         {
-            if ( isShiftClick)
+            if (isShiftClick)
             {
                 int tempCount = 0;
                 for (ItemStack item : player.getInventory().getStorageContents())
@@ -170,7 +167,7 @@ public final class Sell
         // 로그 기록
         LogUtil.addLog(shopName, itemStack.getType().toString(), -tradeAmount, priceSum, currencyType, player != null ? player.getName() : shopName);
 
-        if (player != null)
+        if (nonJetMinionSell && player != null)
         {
             // 플레이어에게 메시지 출력
             SendSellMessage(currencyType, econ, player, tradeAmount, priceSum, itemStack);

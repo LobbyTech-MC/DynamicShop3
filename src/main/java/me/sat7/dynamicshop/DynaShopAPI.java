@@ -411,15 +411,15 @@ public final class DynaShopAPI
      */
     public static double QuickSell(Player player, ItemStack itemStack, boolean nonJetMinionSell)
     {
-        return QuickSell(player, itemStack, -1, true);
+        return QuickSell(player, itemStack, -1, nonJetMinionSell);
     }
     public static double QuickSell(Player player, ItemStack itemStack, boolean playSound, boolean nonJetMinionSell)
     {
-        return QuickSell(player, itemStack, -1, playSound);
+        return QuickSell(player, itemStack, -1, playSound, nonJetMinionSell);
     }
     public static double QuickSell(Player player, ItemStack itemStack, int slot, boolean nonJetMinionSell)
     {
-        return QuickSell(player,itemStack, slot, true);
+        return QuickSell(player,itemStack, slot, nonJetMinionSell, nonJetMinionSell);
     }
     public static double QuickSell(Player player, ItemStack itemStack, int slot, boolean playSound, boolean nonJetMinionSell)
     {
