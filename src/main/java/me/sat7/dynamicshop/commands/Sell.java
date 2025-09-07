@@ -61,7 +61,7 @@ public class Sell implements CommandExecutor
                 return false;
             }
 
-            if (0 == DynaShopAPI.QuickSell(player, itemStack, player.getInventory().getHeldItemSlot()))
+            if (0 == DynaShopAPI.QuickSell(player, itemStack, player.getInventory().getHeldItemSlot(), true))
             {
                 player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.NO_ITEM_TO_SELL_2"));
                 return false;
@@ -78,7 +78,7 @@ public class Sell implements CommandExecutor
                 return false;
             }
 
-            if (0 == DynaShopAPI.QuickSell(player, itemStack))
+            if (0 == DynaShopAPI.QuickSell(player, itemStack, true))
             {
                 player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.NO_ITEM_TO_SELL_2"));
                 return false;

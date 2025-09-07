@@ -1,13 +1,10 @@
 package me.sat7.dynamicshop.transactions;
 
+import static me.sat7.dynamicshop.utilities.LangUtil.n;
+import static me.sat7.dynamicshop.utilities.LangUtil.t;
+
 import java.util.Map;
 
-import me.sat7.dynamicshop.constants.Constants;
-import me.sat7.dynamicshop.economyhook.PlayerpointHook;
-import me.sat7.dynamicshop.events.ShopBuySellEvent;
-import me.sat7.dynamicshop.files.CustomConfig;
-import me.sat7.dynamicshop.guis.ItemTrade;
-import me.sat7.dynamicshop.utilities.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -15,12 +12,22 @@ import org.bukkit.inventory.ItemStack;
 
 import me.sat7.dynamicshop.DynaShopAPI;
 import me.sat7.dynamicshop.DynamicShop;
+import me.sat7.dynamicshop.constants.Constants;
 import me.sat7.dynamicshop.economyhook.JobsHook;
+import me.sat7.dynamicshop.economyhook.PlayerpointHook;
+import me.sat7.dynamicshop.events.ShopBuySellEvent;
+import me.sat7.dynamicshop.files.CustomConfig;
+import me.sat7.dynamicshop.utilities.ConfigUtil;
+import me.sat7.dynamicshop.utilities.HashUtil;
+import me.sat7.dynamicshop.utilities.ItemsUtil;
+import me.sat7.dynamicshop.utilities.LangUtil;
+import me.sat7.dynamicshop.utilities.LogUtil;
+import me.sat7.dynamicshop.utilities.MathUtil;
+import me.sat7.dynamicshop.utilities.ShopUtil;
+import me.sat7.dynamicshop.utilities.SoundUtil;
+import me.sat7.dynamicshop.utilities.UserUtil;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-
-import static me.sat7.dynamicshop.utilities.LangUtil.n;
-import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class Sell
 {
@@ -31,10 +38,10 @@ public final class Sell
 
     public static double quickSellItem(Player player, ItemStack itemStack, String shopName, int tradeIdx, boolean isShiftClick, int slot)
     {
-        return quickSellItem(player, itemStack, shopName, tradeIdx, isShiftClick, slot, true);
+        return quickSellItem(player, itemStack, shopName, tradeIdx, isShiftClick, slot, true, true);
     }
 
-    public static double quickSellItem(Player player, ItemStack itemStack, String shopName, int tradeIdx, boolean isShiftClick, int slot, boolean playSound)
+    public static double quickSellItem(Player player, ItemStack itemStack, String shopName, int tradeIdx, boolean isShiftClick, int slot, boolean playSound, boolean nonJetMinionSell)
     {
         CustomConfig data = ShopUtil.shopConfigFiles.get(shopName);
         String currencyType = ShopUtil.GetCurrency(data);
@@ -49,7 +56,7 @@ public final class Sell
 
         // 실제 판매 가능량 확인
         int tradeAmount;
-        if (player != null)
+        if (nonJetMinionSell && player != null)
         {
             if (isShiftClick)
             {
@@ -106,9 +113,9 @@ public final class Sell
         }
 
         // 플레이어 인벤토리에서 아이템 제거
-        if (player != null)
+        if (nonJetMinionSell && player != null)
         {
-            if (isShiftClick)
+            if ( isShiftClick)
             {
                 int tempCount = 0;
                 for (ItemStack item : player.getInventory().getStorageContents())

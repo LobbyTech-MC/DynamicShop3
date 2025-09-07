@@ -409,19 +409,19 @@ public final class DynaShopAPI
      * @param itemStack Item to sell.
      * @return price sum.
      */
-    public static double QuickSell(Player player, ItemStack itemStack)
+    public static double QuickSell(Player player, ItemStack itemStack, boolean nonJetMinionSell)
     {
         return QuickSell(player, itemStack, -1, true);
     }
-    public static double QuickSell(Player player, ItemStack itemStack, boolean playSound)
+    public static double QuickSell(Player player, ItemStack itemStack, boolean playSound, boolean nonJetMinionSell)
     {
         return QuickSell(player, itemStack, -1, playSound);
     }
-    public static double QuickSell(Player player, ItemStack itemStack, int slot)
+    public static double QuickSell(Player player, ItemStack itemStack, int slot, boolean nonJetMinionSell)
     {
         return QuickSell(player,itemStack, slot, true);
     }
-    public static double QuickSell(Player player, ItemStack itemStack, int slot, boolean playSound)
+    public static double QuickSell(Player player, ItemStack itemStack, int slot, boolean playSound, boolean nonJetMinionSell)
     {
         if (itemStack == null || itemStack.getType().isAir())
             return 0;
@@ -434,7 +434,7 @@ public final class DynaShopAPI
         if (!validateShopName(ret[0]))
             return 0;
 
-        return Sell.quickSellItem(player, itemStack, ret[0], Integer.parseInt(ret[1]), slot == -1, slot, playSound);
+        return Sell.quickSellItem(player, itemStack, ret[0], Integer.parseInt(ret[1]), slot == -1, slot, playSound, nonJetMinionSell);
     }
 
     /**
